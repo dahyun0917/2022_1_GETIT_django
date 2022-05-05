@@ -82,12 +82,12 @@
                     <h1>BLOG LIST</h1>
                     {% for p in post_list %}
                     <div class="card mb-4">
-                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg"
-                                alt="..." /></a>
+                        <a href="#!"><img class="card-img-top" src="{{ p.head_image.url }}"
+                                alt="Card image cap" /></a>
                         <div class="card-body">
                             <h2 class="card-title h4">{{ p.title }}</h2>
                             <p class="card-text">{{ p.content }}</p>
-                            <a href = "{{ p.get_absoulte_url }}" class="btn btn-primary">Read More &arr;</a>
+                            <a href = "{{ p.get_absoulte_url }}" class="btn btn-primary">Read More &rarr;</a>
                         </div>
                         <div>
                             Posted on {{ p.created_at }} by
