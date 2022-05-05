@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from turtle import update
 from django.db import models
 
@@ -7,6 +8,8 @@ class Post(models.Model):
     content=models.TextField()
     
     head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)
+    file_upload = models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)
+    
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at= models.DateTimeField(auto_now=True)
     
