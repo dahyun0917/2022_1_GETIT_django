@@ -29,7 +29,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/idahyeon/GETIT/SW_edu_django/2022_1_GETIT_django/djangovenv"
+set -gx VIRTUAL_ENV "/Users/idahyeon/GETIT/SW_edu_django/2022_1_GETIT_django/myvenv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
@@ -52,7 +52,7 @@ if test -z "$VIRTUAL_ENV_DISABLE_PROMPT"
         set -l old_status $status
 
         # Output the venv prompt; color taken from the blue of the Python logo.
-        printf "%s%s%s" (set_color 4B8BBE) "(djangovenv) " (set_color normal)
+        printf "%s%s%s" (set_color 4B8BBE) "(myvenv) " (set_color normal)
 
         # Restore the return status of the previous command.
         echo "exit $old_status" | .

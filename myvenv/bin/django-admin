@@ -1,4 +1,4 @@
-#!/Users/idahyeon/GETIT/SW_edu_django/2022_1_GETIT_django/djangovenv/bin/python
+#!/Users/idahyeon/GETIT/SW_edu_django/2022_1_GETIT_django/myvenv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

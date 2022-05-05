@@ -8,7 +8,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/Users/idahyeon/GETIT/SW_edu_django/2022_1_GETIT_django/djangovenv"
+setenv VIRTUAL_ENV "/Users/idahyeon/GETIT/SW_edu_django/2022_1_GETIT_django/myvenv"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"
@@ -17,7 +17,7 @@ setenv PATH "$VIRTUAL_ENV/bin:$PATH"
 set _OLD_VIRTUAL_PROMPT="$prompt"
 
 if (! "$?VIRTUAL_ENV_DISABLE_PROMPT") then
-    set prompt = "(djangovenv) $prompt"
+    set prompt = "(myvenv) $prompt"
 endif
 
 alias pydoc python -m pydoc
