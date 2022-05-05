@@ -1,8 +1,19 @@
+from re import template
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Post
 
+class PostList(ListView):
+    model = Post
+    template_name = 'blog/index.html'
+    
+class PostDetail(DetailView):
+    model = Post
+    
+    
 # Create your views here.
+# FBV를 이용한!!
+'''
 def index(request):
     posts=Post.objects.all()
     
@@ -24,3 +35,4 @@ def single_post_page(request, pk):
             'post': post,
         }
     )
+'''
