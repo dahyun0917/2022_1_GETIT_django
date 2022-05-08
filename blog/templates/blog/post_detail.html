@@ -34,47 +34,36 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
+                   
+                    <!-- Post title-->
+                    <h1 class="mt-4">{{post.title}}</h1>
+
+                    <!-- Author -->
+                    <p class="lead">
+                        by
+                        <a href="#">작성자명 쓸 위치(개발예정)</a>
+                    </p>
+
+                    <hr>
+                    <!-- Date/Time-->
+                    <p>{{post.created_at}}</p>
+
+                    <hr>
+
+                    <!-- Preview image-->
+                    {% if post.head_image %}
+                    <img class="img-fluid rounded" src="{{post.head_image.url}}" alt="{{ post.title }} head_image" >
+                    {% else %}
+                    <img class = "img-fluid rounded" src="https://picsum.photos/seed/{{ p.id }}/800/200" alt="random_image">
+                    {% endif %}
+                    
+                    <hr>
+
                     <!-- Post content-->
-                    <article>
-                        <!-- Post header-->
-                        <header class="mb-4">
-                            <!-- Post title-->
-                            <h1 class="mt-4">{{post.title}}</h1>
+                    <p>{{ post.content }}</p>
 
-                            <!-- Author -->
-                            <p class="lead">
-                                by
-                                <a href="#">작성자명 쓸 위치(개발예정)</a>
-                            </p>
-
-                            <hr>
-
-                            <!-- Date/Time-->
-                            <p>{{post.created_at}}</p>
-
-                            <hr>
-
+                    <hr>
                         
-
-                            </header>
-                        <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="{{post.head_image.url}}" alt="..." /></figure>
-            
-                        <hr>
-
-                        <!-- Post content-->
-                        <p>{{ post.content }}</p>
-
-                        <hr>
-                        <section class="mb-5">
-                            <p class="fs-5 mb-4">Science is an enterprise that should be cherished as an activity of the free human mind. Because it transforms who we are, how we live, and it gives us an understanding of our place in the universe.</p>
-                            <p class="fs-5 mb-4">The universe is large and old, and the ingredients for life as we know it are everywhere, so there's no reason to think that Earth would be unique in that regard. Whether of not the life became intelligent is a different question, and we'll see if we find that.</p>
-                            <p class="fs-5 mb-4">If you get asteroids about a kilometer in size, those are large enough and carry enough energy into our system to disrupt transportation, communication, the food chains, and that can be a really bad day on Earth.</p>
-                            <h2 class="fw-bolder mb-4 mt-5">I have odd cosmic thoughts every day</h2>
-                            <p class="fs-5 mb-4">For me, the most fascinating interface is Twitter. I have odd cosmic thoughts every day and I realized I could hold them to myself or share them with people who might be interested.</p>
-                            <p class="fs-5 mb-4">Venus has a runaway greenhouse effect. I kind of want to know what happened there because we're twirling knobs here on Earth without knowing the consequences of it. Mars once had running water. It's bone dry today. Something bad happened there as well.</p>
-                        </section>
-                    </article>
                     <!-- Comments section-->
                     <section class="mb-5">
                         <div class="card bg-light">
