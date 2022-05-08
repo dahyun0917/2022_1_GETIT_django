@@ -5,7 +5,8 @@ from .models import Post
 
 class PostList(ListView):
     model = Post
-    template_name = 'blog/index.html'
+    ordering='-pk'
+    #template_name = 'blog/index.html'
     
 class PostDetail(DetailView):
     model = Post
@@ -15,7 +16,7 @@ class PostDetail(DetailView):
 # FBV를 이용한!!
 '''
 def index(request):
-    posts=Post.objects.all()
+    posts=Post.objects.all().order_by('-pk')
     
     return render(
         request,
