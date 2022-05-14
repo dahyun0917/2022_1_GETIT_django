@@ -3,7 +3,7 @@ from urllib import response
 from django.test import TestCase, Client
 from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
-from .models import Post, Category
+from .models import Post, Category,Tag
 
 class TestView(TestCase):
     def setUp(self):
@@ -12,17 +12,34 @@ class TestView(TestCase):
         
         self.category_movie = Category.objects.create(name='movie',slug='movie')
         
+        self.tag_python_kor = Tag.objects.create(name="파이썬 공부", slug="파이썬-공부")
+        self.tag_python = Tag.objects.create(name="python", slug="python")
+        self.tag_hello = Tag.objects.create(name="hello", slug="hello")
+        
+        
         self.post_001 = Post.objects.create(
             title='첫 번째 포스트입니다.',
             content = 'category가 없을 수도 있죠',
             author=self.user_dahyun
         )
+        
+        self.post_001.tags.add(self.tag_hello)
+        
         self.post_002 = Post.objects.create(
             title='두 번째 포스트입니다.',
             content = 'Hello World. We are the world.',
             category=self.category_movie,
             author=self.user_dahyun
         )
+        
+        self.post_003 = Post.objects.create(
+            title='세 번째 포스트입니다.',
+            content = '안녕하세요',
+            category=self.category_movie,
+            author=self.user_dahyun
+        )
+        self.post_003.tags.add(self.tag_python)
+        self.post_003.tags.add(self.tag_python_kor) 
     
     def category_card_test(self,soup):
         categories_card = soup.find('div',id='categories-card')
@@ -52,7 +69,7 @@ class TestView(TestCase):
     
     def test_post_list(self):
         
-        self.assertEqual(Post.objects.count(),2)
+        self.assertEqual(Post.objects.count(),3)
         #1. 포스트 목록 페이지
         response = self.client.get('/blog/')
         #2. 정상적으로 페이지가 로드되는 것
@@ -75,10 +92,25 @@ class TestView(TestCase):
         post_001_card = main_area.find('div',id='post-1')
         self.assertIn('미분류',post_001_card.text)
         self.assertIn(self.post_001.title,post_001_card.text)
+        self.assertIn(self.tag_hello.name,post_001_card.text)
+        self.assertNotIn(self.tag_python.name,post_001_card.text)
+        self.assertNotIn(self.tag_python_kor.name,post_001_card.text)
         
         post_002_card = main_area.find('div',id='post-2')
         self.assertIn(self.post_002.title,post_002_card.text)
         self.assertIn(self.post_002.category.name, post_002_card.text)
+        self.assertNotIn(self.tag_hello.name,post_002_card.text)
+        self.assertNotIn(self.tag_python.name,post_002_card.text)
+        self.assertNotIn(self.tag_python_kor.name,post_002_card.text)
+        
+        post_003_card = main_area.find('div',id='post-3')
+        self.assertIn(self.post_003.title,post_003_card.text)
+        self.assertIn(self.post_002.category.name, post_003_card.text)
+        self.assertNotIn(self.tag_hello.name,post_003_card.text)
+        self.assertIn(self.tag_python.name,post_003_card.text)
+        self.assertIn(self.tag_python_kor.name,post_003_card.text)
+        
+        
 
         self.assertIn(self.user_dahyun.username.upper(),main_area.text)
         
