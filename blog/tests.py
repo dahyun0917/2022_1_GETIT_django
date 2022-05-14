@@ -143,6 +143,7 @@ class TestView(TestCase):
         self.navbar_test(soup)
         self.category_card_test(soup)
         
+        
         #4. 첫 번째 포스트의 제목이 웹 브라우저 타이틀에 들어있다.
         self.assertIn(self.post_002.title, soup.title.text)
         
@@ -158,8 +159,13 @@ class TestView(TestCase):
         #7. 첫 번째 포스트의 내용(content)이 포스트 영역에 있다.
         self.assertIn(self.post_002.content, post_area.text)
         
+        self.assertNotIn(self.tag_hello.name,post_area.text)
+        self.assertNotIn(self.tag_python.name,post_area.text)
+        self.assertNotIn(self.tag_python_kor.name,post_area.text)
+        
         self.assertIn(self.user_dahyun.username.upper(),post_area.text)
-    
+
+        
     def test_category_page(self):
         response = self.client.get(self.category_movie.get_absolute_url())
         self.assertEqual(response.status_code, 200)
