@@ -1,4 +1,5 @@
 from multiprocessing import AuthenticationError
+from turtle import Turtle
 from urllib import response
 from django.test import TestCase, Client
 from bs4 import BeautifulSoup
@@ -9,8 +10,15 @@ class TestView(TestCase):
     def setUp(self):
         self.client = Client()
         self.user_dahyun = User.objects.create_user(username='dahyun',password='pass4321')
-        
         self.category_movie = Category.objects.create(name='movie',slug='movie')
+         
+        self.user_obama = User.objects.create_user(username='obama',password='pass4321')
+        self.user_trump = User.objects.create_user(username='trump',password='pass4321')
+         
+        self.user_obama.is_staff = True
+        self.user_obama.save()
+        
+
         
         self.tag_python_kor = Tag.objects.create(name="파이썬 공부", slug="파이썬-공부")
         self.tag_python = Tag.objects.create(name="python", slug="python")
@@ -200,8 +208,11 @@ class TestView(TestCase):
         response= self.client.get('/blog/create_post/')
         self.assertNotEqual(response.status_code,200)
         
-        self.client.login(username='dahyun',password='pass4321')
+        self.client.login(username='trump',password='pass4321')
+        response=self.client.get('/blog/create_post/')
+        self.assertNotEqual(response.status_code,200)
         
+        self.client.login(username='obama',password='pass4321')
         response=self.client.get('/blog/create_post/')
         self.assertEqual(response.status_code,200)
         
@@ -220,7 +231,7 @@ class TestView(TestCase):
         )
         last_post = Post.objects.last()
         self.assertEqual(last_post.title,'Post Form 만들기')
-        self.assertEqual(last_post.author.username,'dahyun')
+        self.assertEqual(last_post.author.username,'obama')
         
         
         
