@@ -200,7 +200,7 @@ class TestView(TestCase):
         response= self.client.get('/blog/create_post/')
         self.assertNotEqual(response.status_code,200)
         
-        self.client.login(username='dahyun',password='pass1234')
+        self.client.login(username='dahyun',password='pass4321')
         
         response=self.client.get('/blog/create_post/')
         self.assertEqual(response.status_code,200)
@@ -220,7 +220,7 @@ class TestView(TestCase):
         )
         last_post = Post.objects.last()
         self.assertEqual(last_post.title,'Post Form 만들기')
-        self.assertEqual(last_post.username,'hyo')
+        self.assertEqual(last_post.author.username,'dahyun')
         
         
         

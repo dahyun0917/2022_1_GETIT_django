@@ -41,7 +41,6 @@ class Post(models.Model):
     created_at= models.DateTimeField(auto_now_add=True)
     updated_at= models.DateTimeField(auto_now=True)
     
-    # author : 추후 작성 예정
     author = models.ForeignKey(User,null=TRUE,on_delete=models.SET_NULL)
     
     category = models.ForeignKey(Category,null=True, blank=True,on_delete=models.SET_NULL)
