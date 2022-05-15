@@ -2,9 +2,10 @@
 #from django.shortcuts import render
 from multiprocessing import context
 from unicodedata import category
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.shortcuts import render,redirect
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, Category,Tag
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class PostList(ListView):
     model = Post
@@ -25,6 +26,17 @@ class PostDetail(DetailView):
         context['no_category_post_count'] = Post.objects.filter(category = None).count()
         return context
     
+class PostCreate(LoginRequiredMixin,CreateView):
+    model=Post
+    fields=['title','hook_text','content','head_image','file_upload','category'] 
+    
+    def form_vaild(self, form):
+        current_user=self.request.user
+        if current_user.is_authenticated:
+            form.instance.author=current_user
+            return super(PostCreate,self).form_vaild(form)
+        else:
+            return redirect('/blog/')
     
 def category_page(request,slug):
     if slug=='no_category':
@@ -58,7 +70,8 @@ def tag_page(request,slug):
             'no_category_post_count' : Post.objects.filter(category=None).count(),
         }
     )
-    
+  
+ 
 # Create your views here.
 # FBV를 이용한!!
 '''
