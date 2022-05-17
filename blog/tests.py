@@ -4,17 +4,13 @@ from urllib import response
 from django.test import TestCase, Client
 from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, Comment
 
 
 class TestView(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user_dahyun = User.objects.create_user(
-            username='dahyun', password='pass4321')
-        self.category_movie = Category.objects.create(
-            name='movie', slug='movie')
-
+        
         self.user_obama = User.objects.create_user(
             username='obama', password='pass4321')
         self.user_trump = User.objects.create_user(
@@ -22,6 +18,11 @@ class TestView(TestCase):
 
         self.user_obama.is_staff = True
         self.user_obama.save()
+
+        self.user_dahyun = User.objects.create_user(
+            username='dahyun', password='pass4321')
+        self.category_movie = Category.objects.create(
+            name='movie', slug='movie')
 
         self.tag_python_kor = Tag.objects.create(name="파이썬 공부", slug="파이썬-공부")
         self.tag_python = Tag.objects.create(name="python", slug="python")
@@ -33,7 +34,7 @@ class TestView(TestCase):
             author=self.user_dahyun
         )
 
-        self.post_001.tags.add(self.tag_hello)
+        self.post_001.tags.add(self.tag_hello) 
 
         self.post_002 = Post.objects.create(
             title='두 번째 포스트입니다.',
@@ -50,6 +51,12 @@ class TestView(TestCase):
         )
         self.post_003.tags.add(self.tag_python)
         self.post_003.tags.add(self.tag_python_kor)
+        
+        self.comment_001 = Comment.objects.create(
+            post=self.post_001,
+            author=self.user_obama,
+            content="첫 번째 댓글입니다."
+        )
 
     def category_card_test(self, soup):
         categories_card = soup.find('div', id='categories-card')
@@ -170,6 +177,7 @@ class TestView(TestCase):
 
         self.assertIn(self.user_dahyun.username.upper(), post_area.text)
 
+        
     def test_category_page(self):
         response = self.client.get(self.category_movie.get_absolute_url())
         self.assertEqual(response.status_code, 200)
@@ -289,3 +297,4 @@ class TestView(TestCase):
         self.assertIn('한글 태그',main_area.text)
         self.assertIn('some tag',main_area.text)
         self.assertNotIn('python',main_area.text)
+        
