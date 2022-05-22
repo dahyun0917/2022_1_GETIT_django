@@ -7,6 +7,7 @@
         {%endif%}
     {%endif%}
         <h1>Blog
+            {% if search_info %}<small class="text-muted">{{ search_info }}</small>{%endif%}
             {% if category %} <span class="badge bg-secondary">{{category}}</span>{%endif%}
             {% if tag %}<i class="fas fa-tags"></i> <span class="badge rounded-pill bg-primary">{{tag}}</span>{%endif%}</h1>
             {% if post_list %}
