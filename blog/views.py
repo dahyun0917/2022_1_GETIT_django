@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from traitlets import import_item
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag ,Comment
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
@@ -28,7 +28,16 @@ def new_comment(request,pk) :
         else:
             raise PermissionDenied
                 
-
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model=Comment
+    form_class=CommentForm
+    
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author :
+            return super(CommentUpdate,self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
+    
 class PostList(ListView):
     model = Post
     ordering = '-pk'

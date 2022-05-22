@@ -9,5 +9,6 @@ urlpatterns = [
     path('',views.PostList.as_view()),
     path('<int:pk>/', views.PostDetail.as_view()),
     path('<int:pk>/new_comment/', views.new_comment),
+    path('update_comment/<int:pk>/',views.CommentUpdate.as_view()),
     #path('', views.index),
-]
+] 
